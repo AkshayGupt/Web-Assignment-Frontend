@@ -42,18 +42,19 @@ const Playlist = () => {
 
   return (
     <div className="row">
-        
       <div className="col-xl-8 col-12 ">
-      <div className="mx-auto">
-         <a className="btn btn-info m-4" href="/">Back to Home </a>
-         </div>
+        <div className="mx-auto">
+          <a className="btn btn-info m-4" href="/">
+            Back to Home{" "}
+          </a>
+        </div>
         <div
           id="container"
           style={{
             maxWidth: "90%",
             margin: "auto",
             minHeight: "300px",
-            height:"auto"
+            height: "auto",
           }}
         >
           <div id="monitor">
@@ -61,9 +62,7 @@ const Playlist = () => {
               <Video link={current} endVideo={onEndVideo} />
             </div>
           </div>
-         
         </div>
-
       </div>
       <div
         className="col-xl-3 col-12 bg-info mt-3"
