@@ -2,16 +2,35 @@ import React, { useEffect, useState } from "react";
 import Video from "./Video";
 import ReactPlayer from "react-player";
 import "./Playlist.css";
+import { useParams } from "react-router-dom";
+import { getPlaylistById } from "../../utils/HelperFunctions";
 const Playlist = () => {
   const [current, setCurrent] = useState("");
   const [link, setLink] = useState("");
   const [playlist, setPlaylist] = useState([
-    { id: 1, url: "https://www.youtube.com/watch?v=cSajyt-n5v4", isOn: false },
-    { id: 2, url: "https://www.youtube.com/watch?v=LTT4MYQqz4o", isOn: false },
+    {
+      link_id: 1,
+      link: "https://www.youtube.com/watch?v=cSajyt-n5v4",
+      isOn: false,
+    },
+    {
+      link_id: 2,
+      link: "https://www.youtube.com/watch?v=LTT4MYQqz4o",
+      isOn: false,
+    },
   ]);
 
-  useEffect(() => {
+  const playlist_id = useParams();
+
+  useEffect(async () => {
     //TODO: getPlaylistById
+    const data = await getPlaylistById(playlist_id);
+    data.map((video)=>{
+      video.isOn =false;
+      let playlist_temp = playlist;
+      playlist_temp.push(video);
+      setPlaylist(playlist_temp);
+    })
   }, []);
 
   //When Video is selected to play
@@ -20,10 +39,8 @@ const Playlist = () => {
     const current = play[id.key]; //New line added
 
     setCurrent(current);
-    // this.setState({ current });
     play.splice(id.key, 1);
     setPlaylist(play);
-    // this.setState({ playlist: play });
   };
 
   //When the video ends
@@ -73,14 +90,14 @@ const Playlist = () => {
       >
         <h3 className="text-center">Playlist</h3>
         <ul style={{ listStyle: "none", padding: "10px" }}>
-          {playlist.map((link, key = link.id) => {
+          {playlist.map((link, key = link.link_id) => {
             return (
               <div className="m-1 text-center">
                 <ReactPlayer
                   onStart={() => onVideoEnd({ key })}
                   onEnded={() => onVideoEnd({ key })}
                   className="myvideo"
-                  url={link.url}
+                  url={link.link}
                   height={150}
                   width={280}
                   controls="true"

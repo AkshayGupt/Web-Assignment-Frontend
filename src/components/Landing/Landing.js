@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Landing.css";
-import randomColor from "randomcolor";
+
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import { Redirect } from "react-router-dom";
 import { getAllCategories } from "../../utils/HelperFunctions";

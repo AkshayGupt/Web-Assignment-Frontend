@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+import { createPlaylist } from "../../utils/HelperFunctions";
 
 const CreatePlaylist = () => {
-  const [link, setLink] = useState("");
+  const [link, setLink] = useState();
   const [links, setLinks] = useState([]);
   const [linkError, setLinkError] = useState("");
   const [name, setName] = useState("");
+  const [category, setCategory] = useState("");
+  const [description, setDescription] = useState("");
 
   const addLink = () => {
     let url = link;
@@ -12,8 +15,7 @@ const CreatePlaylist = () => {
     if (url.includes("www.youtube.com")) {
       if (url != undefined || url != "") {
         //Regex for validation
-        var regExp =
-          /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([^#\&\?]*).*/;
+        var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([^#\&\?]*).*/;
         var match = url.match(regExp);
         if (match && match[2].length == 11) {
           const play = links.map((link) => link);
@@ -39,12 +41,16 @@ const CreatePlaylist = () => {
     setLinkError("");
   };
 
-  const handleSubmit = () => {
-    if (name == "" || links.length == 0) {
+  const handleSubmit = async () => {
+    if (name == "" || links.length == 0 || category == "") {
       alert("Please fill all fields");
     } else {
-      alert("Success");
-      //TODO: API CALL
+      console.table(category,name,description,links);
+      const data =await createPlaylist(category,name,description,links);
+      setCategory("");
+      setName("");
+      setLink("");
+      setLinks([]);
     }
   };
 
@@ -73,6 +79,31 @@ const CreatePlaylist = () => {
           required
         />
       </div>
+      <div class="mb-3">
+        <label for="name" class="form-label">
+          Category name
+        </label>
+        <input
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+          type="text"
+          class="form-control"
+          id="name"
+          placeholder="e.g. Summer"
+          required
+        />
+      </div>
+
+      <div className="form-floating mb-3">
+         <label>Description</label> 
+          <textarea
+            className="form-control"
+            placeholder="Add Description"
+            id="floatingTextarea"
+            onChange={(e)=>setDescription(e.target.value)}
+          >{description}</textarea>
+      </div>
+
       <div class="mb-3">
         <label for="name" class="form-label">
           Add youtube links:{" "}
@@ -108,6 +139,8 @@ const CreatePlaylist = () => {
             ></i>
           </span>
         </div>
+
+       
         <div className="row">
           {links.map((link) => {
             return (
