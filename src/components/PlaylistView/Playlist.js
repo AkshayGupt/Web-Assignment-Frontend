@@ -111,7 +111,7 @@ const Playlist = () => {
                         textAlign:"left"
                       }}
                       className="text-light mt-2"
-                      >{link.title.substring(0,Math.min(60,link.title.length))}...</p>
+                      >{link.title.substring(0,Math.min(60,link.title.length))}<span className={link.title<60 && "d-none"}>...</span></p>
                       <div style={{
                         marginTop:"-13px",
                         textAlign:"left"

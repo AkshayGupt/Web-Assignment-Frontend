@@ -126,8 +126,9 @@ const CreatePlaylist = () => {
             class="form-control"
             id="name"
             placeholder=""
+            size="12"
             style={{
-              width: "100%",
+              
               outline: "none",
             }}
           />

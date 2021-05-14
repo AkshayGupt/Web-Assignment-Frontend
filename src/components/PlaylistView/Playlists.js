@@ -57,33 +57,58 @@ const Playlists = () => {
         </h4>
         {popular.map((playlist) => {
           return (
+            <>
+
             <div
               onClick={() => handleSelect(playlist)}
-              className="bg-dark p-2 ml-3 mb-2 text-light d-flex justify-content-between btn"
+              className="bg-dark p-3   ml-3 mb-2 text-light d-flex justify-content-between btn"
               style={{ borderRadius: "10px" }}
             >
-              <p>{playlist.playlist_name}</p>
+              <div>
+              <p style={{
+                textAlign:"left"
+              }}>{playlist.playlist_name}</p>
+              <div style={{
+                marginTop:"0px",
+                fontSize:"0.8em",
+                textAlign:"left",
+                color:"lightgrey"
+              }}>{playlist.playlist_description.substring(0,150)}<span className={playlist.playlist_description.length<150 && "d-none"}>...</span></div>
+              </div>
+              
               <p className="mr-3">
                 {playlist.playlist_view_count}
                 <i className="fa fa-street-view mx-1" aria-hidden="true"></i>
               </p>
             </div>
+            
+            </>
           );
         })}
         <h6 className={others.length > 0 ? "" : "d-none"}>All</h6>
         {others.map((playlist) => {
           return (
             <div
-              onClick={() => handleSelect(playlist)}
-              className="bg-dark p-2 ml-3 mb-2 text-light d-flex justify-content-between btn"
-              style={{ borderRadius: "10px" }}
-            >
-              <p>{playlist.playlist_name}</p>
-              <p className="mr-3">
-                {playlist.playlist_view_count}
-                <i className="fa fa-street-view mx-1" aria-hidden="true"></i>
-              </p>
+            onClick={() => handleSelect(playlist)}
+            className="bg-dark p-3   ml-3 mb-2 text-light d-flex justify-content-between btn"
+            style={{ borderRadius: "10px" }}
+          >
+            <div>
+            <p>{playlist.playlist_name}</p>
+            <div style={{
+              marginTop:"-15px",
+              fontSize:"0.8em",
+              // marginLeft:"-20px",
+              color:"lightgrey"
+            }}>{playlist.playlist_description}</div>
             </div>
+            
+            <p className="mr-3">
+              {playlist.playlist_view_count}
+              <i className="fa fa-street-view mx-1" aria-hidden="true"></i>
+            </p>
+          </div>
+          
           );
         })}
       </div>

@@ -13,7 +13,7 @@ const Landing = () => {
   useEffect(() => {
     getAllCategories()
       .then((categories) => {
-        var data = [];
+        let data = [];
         categories.map((category) =>
           data.push({ id: category.category_id, name: category.category_name })
         );
@@ -26,7 +26,7 @@ const Landing = () => {
   const showPopularCategories = () => {
     if (items.length >= 2) {
       let data = [];
-      for (let i = 0; i < 2; i++) {
+      for (let i = 0; i < Math.min(2, items.length); i++) {
         data.push(items[i]);
         <p>{items[i].category_name}</p>;
       }
@@ -96,7 +96,11 @@ const Landing = () => {
     >
       <h1 className=" heading-logo mb-4">Let's Jam</h1>
       <div
-        className="d-flex mx-auto mt-4 justify-content-around"
+        className={
+          items.length == 0
+            ? "d-none"
+            : "d-flex mx-auto mt-4 justify-content-around"
+        }
         style={{ width: "25%" }}
       >
         <i
@@ -133,6 +137,7 @@ const Landing = () => {
               fontSize: "12px",
               marginTop: "10px",
               marginRight: "5px",
+              paddingInline: "10px",
             }}
           >
             <a href="/createPlaylist" className="btn btn-light btn-sm">
@@ -148,7 +153,7 @@ const Landing = () => {
           >
             <a href="/showAll" className="btn btn-light btn-sm">
               {" "}
-              Show All
+              Show all categories
             </a>
           </p>
         </div>
