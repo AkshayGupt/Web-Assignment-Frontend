@@ -2,13 +2,12 @@ import React, { Component } from "react";
 import ReactPlayer from "react-player";
 
 // Controls the view of playing video
-class Video extends Component {
-  render() {
+const Video =(props)=> {
     return (
       <div>
         <ReactPlayer
-          onEnded={() => this.props.endVideo()}
-          url={this.props.link.url}
+          onEnded={() => props.endVideo()}
+          url={props.link}
           height={450}
           width={"100%"}
           display="false"
@@ -17,7 +16,6 @@ class Video extends Component {
         />
       </div>
     );
-  }
 }
 
 export default Video;

@@ -11,22 +11,39 @@ const Playlist = () => {
 
   const params = useParams();
 
-  useEffect(async () => {
-    const data = await getPlaylistById(params.playlistId);
-    data.map((video) => {
-      video.isOn = false;
-      let playlist_temp = playlist;
-      playlist_temp.push(video);
+  const getLinks = () =>{
+    getPlaylistById(params.playlistId)
+    .then(data=>{
+      let playlist_temp = [];
+      data.map((video) => {
+        video.isOn = false;
+        playlist_temp.push(video);
+      });
       setPlaylist(playlist_temp);
-    });
+    })
+    .catch(err=>{
+      console.log(err);
+    })
+  }
+
+  useEffect( () => {
+    getLinks();
+   
   }, []);
 
   //When Video is selected to play
   const onVideoEnd = (id) => {
-    const play = playlist.map((link, key) => link);
-    const current = play[id.key]; //New line added
 
-    setCurrent(current);
+   
+    const current_temp = playlist[id.key].link;
+    // let play = playlist;
+    // play.splice(id.key,1);
+    
+
+    const play = playlist.map((link, key) => link);
+    // const current = play[id.key]; //New line added
+
+    setCurrent(current_temp);
     play.splice(id.key, 1);
     setPlaylist(play);
   };
@@ -38,7 +55,7 @@ const Playlist = () => {
     if (play.length !== 0) {
       const current = play[0];
       play.shift();
-      setCurrent(current);
+      setCurrent(current.link);
       setPlaylist(play);
     } else {
       setCurrent("");
@@ -78,7 +95,7 @@ const Playlist = () => {
       >
         <h3 className="text-center">Playlist</h3>
         <ul style={{ listStyle: "none", padding: "10px" }}>
-          {playlist.map((link, key = link.link_id) => {
+          {playlist.map((link, key) => {
             return (
               <div className="m-1 text-center">
                 <ReactPlayer
