@@ -71,11 +71,12 @@ const Playlist = () => {
           </a>
         </div>
         <div
+        
           id="container"
           style={{
             maxWidth: "90%",
             margin: "auto",
-            minHeight: "300px",
+            minHeight: "0px",
             height: "auto",
           }}
         >
@@ -87,18 +88,48 @@ const Playlist = () => {
         </div>
       </div>
       <div
-        className="col-xl-3 col-12 bg-info mt-3"
+        className="col-xl-4 col-12 bg-dark mt-3"
         style={{
           minHeight: "100vh",
           padding: "10px",
         }}
       >
-        <h3 className="text-center">Playlist</h3>
+        <h3 className="text-center text-light">Playlist</h3>
         <ul style={{ listStyle: "none", padding: "10px" }}>
           {playlist.map((link, key) => {
             return (
-              <div className="m-1 text-center">
-                <ReactPlayer
+              <div className="m-2 btn" onClick={()=> onVideoEnd({ key })}>
+                <div className="row">
+                    <div className="col-xl-7 col-12">
+                    <img style={{width:"100%",height:"150px",maxWidth:"400px"}} src={link.thumbnail_url}></img>
+                    </div>
+                    <div className="col-xl-5 col-12 mt-2" id="title-width" style={{
+                      float:"left"
+                    }}>
+                      <p style={{
+                        fontSize:"0.9em",
+                        textAlign:"left"
+                      }}
+                      className="text-light mt-2"
+                      >{link.title.substring(0,Math.min(60,link.title.length))}...</p>
+                      <div style={{
+                        marginTop:"-13px",
+                        textAlign:"left"
+                      }}>
+                      <a style={{
+                        color:"grey",
+                        fontSize:"0.8em",
+                        padding:"0px",
+                       
+                      }}
+                      target="blank"
+                      href={link.author_url}>{link.author_name}</a>
+                      </div>
+                     
+                    </div>
+                </div>
+                < ></>
+                {/* <ReactPlayer
                   onStart={() => onVideoEnd({ key })}
                   onEnded={() => onVideoEnd({ key })}
                   className="myvideo"
@@ -110,8 +141,8 @@ const Playlist = () => {
                   style={{
                     margin: "auto",
                   }}
-                />
-                ;
+                /> */}
+                
               </div>
             );
           })}
