@@ -9,9 +9,10 @@ const Playlists = () => {
   const [others, setOthers] = useState([]);
   const [popular, setPopular] = useState([]);
 
-  const category_name = useParams();
+  const params = useParams();
   useEffect(async () => {
-    const data = await getPlaylistsByCategory(category_name);
+    const data = await getPlaylistsByCategory(params.categoryName);
+    console.log("PLAYLISTS: ", data);
 
     if (data.length <= 4) {
       setPopular(data);

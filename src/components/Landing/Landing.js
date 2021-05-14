@@ -8,10 +8,19 @@ const Landing = () => {
   const [redirect, setRedirect] = useState("");
   const [error, setError] = useState("");
   const [items, setItems] = useState([]);
+  const [itemNames, setItemNames] = useState([]);
 
-  useEffect(async () => {
-    const categories = await getAllCategories();
-    setItems(categories);
+  useEffect(() => {
+    getAllCategories()
+      .then((categories) => {
+        var data = [];
+        categories.map((category) =>
+          data.push({ id: category.category_id, name: category.category_name })
+        );
+        setItems(categories);
+        setItemNames(data);
+      })
+      .catch((err) => console);
   }, []);
 
   const showPopularCategories = () => {
@@ -62,7 +71,7 @@ const Landing = () => {
 
   const handleOnSelect = (item) => {
     console.log(item);
-    const path = "/playlists/" + item.category_name;
+    const path = "/playlists/" + item.name;
     console.log(path);
     setRedirect(path);
     return <Redirect to={path} />;
@@ -109,7 +118,7 @@ const Landing = () => {
         className="mx-auto"
       >
         <ReactSearchAutocomplete
-          items={items}
+          items={itemNames}
           onSearch={handleOnSearch}
           onHover={handleOnHover}
           onSelect={handleOnSelect}

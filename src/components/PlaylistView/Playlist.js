@@ -7,30 +7,18 @@ import { getPlaylistById } from "../../utils/HelperFunctions";
 const Playlist = () => {
   const [current, setCurrent] = useState("");
   const [link, setLink] = useState("");
-  const [playlist, setPlaylist] = useState([
-    {
-      link_id: 1,
-      link: "https://www.youtube.com/watch?v=cSajyt-n5v4",
-      isOn: false,
-    },
-    {
-      link_id: 2,
-      link: "https://www.youtube.com/watch?v=LTT4MYQqz4o",
-      isOn: false,
-    },
-  ]);
+  const [playlist, setPlaylist] = useState([]);
 
-  const playlist_id = useParams();
+  const params = useParams();
 
   useEffect(async () => {
-    //TODO: getPlaylistById
-    const data = await getPlaylistById(playlist_id);
-    data.map((video)=>{
-      video.isOn =false;
+    const data = await getPlaylistById(params.playlistId);
+    data.map((video) => {
+      video.isOn = false;
       let playlist_temp = playlist;
       playlist_temp.push(video);
       setPlaylist(playlist_temp);
-    })
+    });
   }, []);
 
   //When Video is selected to play
